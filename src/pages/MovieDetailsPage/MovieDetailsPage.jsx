@@ -16,13 +16,37 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   return (
-    <div>
-      {movie && <h1>{movie.original_title}</h1>}
-      {movie && <p>{movie.overview}</p>}
+    <main>
+      {!!movie && (
+        <div>
+          <img
+            src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+            alt=""
+          />
+          <h1>{movie.title}</h1>
+          <h2>Overview</h2>
+          <p>{movie.overview}</p>
+          <p>
+            <b>Rating:</b> {movie.vote_average}
+          </p>
+          <p>
+            <b>Popularity:</b> {movie.popularity}
+          </p>
+          <p>
+            <b>Release date:</b> {movie.release_date}
+          </p>
+          <p>
+            <b>Genre:</b>
+            {movie.genres?.map(el => (
+              <li key={el.id}>{el.name}</li>
+            ))}
+          </p>
+        </div>
+      )}
       <Link to="cast">Cast</Link>
       <Link to="reviews">Reviews</Link>
       <Outlet />
-    </div>
+    </main>
   );
 };
 

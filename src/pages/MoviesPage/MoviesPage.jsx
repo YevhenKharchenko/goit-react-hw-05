@@ -1,13 +1,16 @@
 import { requestMovie } from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import MovieList from '../../components/MovieList/MovieList';
 
 const MoviesPage = () => {
-  const [query, setMovie] = useState('');
   const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') ?? '';
+  const location = useLocation();
 
   useEffect(() => {
-    if (!query.length) return;
+    if (query === '') return;
 
     async function fetchMovie() {
       const response = await requestMovie(query);
@@ -21,25 +24,17 @@ const MoviesPage = () => {
     e.preventDefault();
 
     const value = e.currentTarget.elements.name.value;
-    setMovie(value);
+    setSearchParams({ query: value });
   }
 
   return (
-    <div>
+    <main>
       <form onSubmit={onSubmit}>
         <input name="name" type="text" />
         <button type="submit">Search</button>
       </form>
-      <ul>
-        {movies.map(el => {
-          return (
-            <li key={el.id}>
-              <Link to={`/movies/${el.id}`}>{el.original_title}</Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+      <MovieList movies={movies} location={location} />
+    </main>
   );
 };
 

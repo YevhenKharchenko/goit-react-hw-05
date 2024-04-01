@@ -15,7 +15,7 @@ const MovieReviews = () => {
     fetchCast();
   }, [idMovies]);
 
-  return (
+  return reviews.length ? (
     <ul>
       {reviews.map(el => {
         return (
@@ -26,6 +26,8 @@ const MovieReviews = () => {
         );
       })}
     </ul>
+  ) : (
+    'No reviews'
   );
 };
 
