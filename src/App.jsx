@@ -5,13 +5,6 @@ import MovieDetailsPage from './pages/MovieDetailsPage/MovieDetailsPage.jsx';
 import MovieCast from './components/MovieCast/MovieCast.jsx';
 import MovieReviews from './components/MovieReviews/MovieReviews.jsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx';
-import {
-  requestTrendingMovies,
-  requestMovie,
-  requestMovieDetails,
-  requestMovieCredits,
-  requestMovieReviews,
-} from './services/tmdb-api.js';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
