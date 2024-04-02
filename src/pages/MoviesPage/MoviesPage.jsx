@@ -31,13 +31,22 @@ const MoviesPage = () => {
     e.preventDefault();
 
     const value = e.currentTarget.elements.name.value;
+
+    if (!value.length)
+      toast.error('Input field is empty. Please provide a value.');
+
     setSearchParams({ query: value });
   }
 
   return (
     <main className={css.main}>
       <form onSubmit={onSubmit} className={css.form}>
-        <input name="name" type="text" className={css.input} />
+        <input
+          name="name"
+          type="text"
+          className={css.input}
+          placeholder="Search movies"
+        />
         <button type="submit" className={css.btn}>
           Search
         </button>
