@@ -24,7 +24,7 @@ const MovieCast = () => {
           <li key={el.id} className={css.listItem}>
             <img
               src={
-                !!el.profile_path
+                el.profile_path
                   ? `https://image.tmdb.org/t/p/w200${el.profile_path}`
                   : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
               }

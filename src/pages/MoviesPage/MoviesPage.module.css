@@ -40,8 +40,8 @@
   align-items: center;
   gap: 10px;
   border-radius: 8px;
-  background: #4e75ff;
-  color: #fff;
+  background: #f5c518;
+  color: #111111;
   font-family: Montserrat;
   font-size: 16px;
   font-weight: 500;
@@ -54,5 +54,5 @@
 
 .btn:hover,
 .btn:focus {
-  background-color: #6c8cff;
+  background-color: #e2b618;
 }

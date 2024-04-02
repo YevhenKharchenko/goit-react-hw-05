@@ -1,6 +1,6 @@
 import { requestMovieDetails } from '../../services/tmdb-api';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
@@ -67,7 +67,9 @@ const MovieDetailsPage = () => {
             Reviews
           </NavLink>
         </div>
-        <Outlet />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Outlet />
+        </Suspense>
       </div>
     </main>
   );
