@@ -29,6 +29,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: blue;
+}
+
 img {
   display: block;
   max-width: 100%;

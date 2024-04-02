@@ -1,0 +1,40 @@
+.main {
+  padding-left: 24px;
+}
+
+.movieWrapper {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.descriptionWrapper {
+  padding-top: 24px;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+
+.overview {
+  width: 700px;
+}
+
+.genreItem {
+  display: inline-flex;
+  margin-left: 4px;
+}
+
+.informText {
+  margin-bottom: 16px;
+}
+
+.linksWrapper {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.active {
+  color: red;
+}

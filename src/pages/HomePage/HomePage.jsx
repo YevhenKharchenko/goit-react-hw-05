@@ -2,6 +2,7 @@ import MovieList from '../../components/MovieList/MovieList';
 import { requestTrendingMovies } from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import css from './HomePage.module.css';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -17,8 +18,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <main>
-      <h1>Trending today</h1>
+    <main className={css.main}>
+      <h1 className={css.mainTitle}>Trending today</h1>
       <MovieList movies={movies} location={location} />
     </main>
   );

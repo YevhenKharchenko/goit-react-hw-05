@@ -1,6 +1,7 @@
 import { requestMovieCredits } from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import css from './MovieCast.module.css';
 
 const MovieCast = () => {
   const { movieId: idMovie } = useParams();
@@ -17,15 +18,16 @@ const MovieCast = () => {
   }, [idMovie]);
 
   return (
-    <ul>
+    <ul className={css.list}>
       {cast.map(el => {
         return (
-          <li key={el.id}>
+          <li key={el.id} className={css.listItem}>
             <img
               src={`https://image.tmdb.org/t/p/w200${el.profile_path}`}
-              alt=""
+              alt={el.name}
+              width={200}
             />
-            <p>
+            <p className={css.itemText}>
               {el.name} - {el.character}
             </p>
           </li>
