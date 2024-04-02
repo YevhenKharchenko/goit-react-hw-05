@@ -2,6 +2,7 @@ import { requestMovie } from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import MovieList from '../../components/MovieList/MovieList';
+import css from './MoviesPage.module.css';
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
@@ -28,10 +29,12 @@ const MoviesPage = () => {
   }
 
   return (
-    <main>
-      <form onSubmit={onSubmit}>
-        <input name="name" type="text" />
-        <button type="submit">Search</button>
+    <main className={css.main}>
+      <form onSubmit={onSubmit} className={css.form}>
+        <input name="name" type="text" className={css.input} />
+        <button type="submit" className={css.btn}>
+          Search
+        </button>
       </form>
       <MovieList movies={movies} location={location} />
     </main>

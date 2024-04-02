@@ -5,6 +5,8 @@
 body {
   font-family: Montserrat, sans-serif;
   line-height: 1.5;
+  background-color: #111111;
+  color: #ffffff;
 }
 
 h1,
@@ -30,7 +32,7 @@ a {
 }
 
 a:hover {
-  color: blue;
+  color: #4e75ff;
 }
 
 img {

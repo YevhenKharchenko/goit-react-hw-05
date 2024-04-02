@@ -8,13 +8,21 @@
 
 .listItem {
   border: 1px solid black;
+  border-radius: 8px;
+  overflow: hidden;
   width: 200px;
   justify-content: center;
   display: flex;
   flex-direction: column;
 }
 
+.castImg {
+  object-fit: cover;
+}
+
 .itemText {
   padding: 8px;
   font-size: 14px;
+  height: 80px;
+  background-color: #1a1a1a;
 }

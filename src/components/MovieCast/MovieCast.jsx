@@ -23,9 +23,15 @@ const MovieCast = () => {
         return (
           <li key={el.id} className={css.listItem}>
             <img
-              src={`https://image.tmdb.org/t/p/w200${el.profile_path}`}
+              src={
+                !!el.profile_path
+                  ? `https://image.tmdb.org/t/p/w200${el.profile_path}`
+                  : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+              }
               alt={el.name}
               width={200}
+              height={300}
+              className={css.castImg}
             />
             <p className={css.itemText}>
               {el.name} - {el.character}

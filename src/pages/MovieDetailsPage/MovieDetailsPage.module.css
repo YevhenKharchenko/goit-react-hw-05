@@ -1,10 +1,12 @@
 .main {
-  padding-left: 24px;
 }
 
 .movieWrapper {
+  padding-left: 24px;
   display: flex;
   margin-bottom: 24px;
+  box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
+    0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
 }
 
 .descriptionWrapper {
@@ -16,17 +18,27 @@
   gap: 16px;
 }
 
+.title {
+  color: #f5c518;
+}
+
 .overview {
   width: 700px;
 }
 
 .genreItem {
   display: inline-flex;
-  margin-left: 4px;
+  margin-left: 6px;
+}
+
+.wrapper {
+  padding-left: 24px;
 }
 
 .informText {
   margin-bottom: 16px;
+  font-size: 20px;
+  color: #f5c518;
 }
 
 .linksWrapper {
@@ -36,5 +48,5 @@
 }
 
 .active {
-  color: red;
+  color: #f5c518;
 }

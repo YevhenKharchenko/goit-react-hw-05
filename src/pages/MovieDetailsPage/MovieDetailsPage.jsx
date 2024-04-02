@@ -30,7 +30,7 @@ const MovieDetailsPage = () => {
             alt=""
           />
           <div className={css.descriptionWrapper}>
-            <h2>{movie.title}</h2>
+            <h2 className={css.title}>{movie.title}</h2>
             <p>
               <b>Overview:</b>
             </p>
@@ -55,18 +55,20 @@ const MovieDetailsPage = () => {
           </div>
         </div>
       )}
-      <p className={css.informText}>
-        <b>Additional information</b>
-      </p>
-      <div className={css.linksWrapper}>
-        <NavLink to="cast" className={buildLinkClass}>
-          Cast
-        </NavLink>
-        <NavLink to="reviews" className={buildLinkClass}>
-          Reviews
-        </NavLink>
+      <div className={css.wrapper}>
+        <p className={css.informText}>
+          <b>Additional information</b>
+        </p>
+        <div className={css.linksWrapper}>
+          <NavLink to="cast" className={buildLinkClass}>
+            Cast
+          </NavLink>
+          <NavLink to="reviews" className={buildLinkClass}>
+            Reviews
+          </NavLink>
+        </div>
+        <Outlet />
       </div>
-      <Outlet />
     </main>
   );
 };
