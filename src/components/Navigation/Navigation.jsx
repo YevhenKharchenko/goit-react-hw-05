@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
+import { Toaster } from 'react-hot-toast';
 import css from './Navigation.module.css';
 
 const buildLinkClass = ({ isActive }) => {
@@ -17,6 +18,7 @@ const Navigation = () => {
           Movies
         </NavLink>
       </nav>
+      <Toaster position="top-right" />
     </header>
   );
 };

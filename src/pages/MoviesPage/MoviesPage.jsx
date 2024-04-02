@@ -1,6 +1,7 @@
-import { requestMovie } from '../../services/tmdb-api';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { requestMovie } from '../../services/tmdb-api';
 import MovieList from '../../components/MovieList/MovieList';
 import css from './MoviesPage.module.css';
 
@@ -8,14 +9,19 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
-  const location = useLocation();
 
   useEffect(() => {
     if (query === '') return;
 
     async function fetchMovie() {
-      const response = await requestMovie(query);
-      setMovies(response);
+      try {
+        const response = await requestMovie(query);
+        setMovies(response);
+      } catch (error) {
+        toast.error(
+          `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
+        );
+      }
     }
 
     fetchMovie();
@@ -36,7 +42,7 @@ const MoviesPage = () => {
           Search
         </button>
       </form>
-      <MovieList movies={movies} location={location} />
+      <MovieList movies={movies} />
     </main>
   );
 };

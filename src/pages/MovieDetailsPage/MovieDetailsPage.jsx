@@ -1,8 +1,22 @@
-import { requestMovieDetails } from '../../services/tmdb-api';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect, Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
 import clsx from 'clsx';
+import toast from 'react-hot-toast';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import {
+  Route,
+  Routes,
+  NavLink,
+  useParams,
+  useLocation,
+} from 'react-router-dom';
+import { requestMovieDetails } from '../../services/tmdb-api';
+import Loader from '../../components/Loader/Loader.jsx';
+import BackLink from '../../components/BackLink/BackLink.jsx';
+const MovieCast = lazy(() =>
+  import('../../components/MovieCast/MovieCast.jsx')
+);
+const MovieReviews = lazy(() =>
+  import('../../components/MovieReviews/MovieReviews.jsx')
+);
 import css from './MovieDetailsPage.module.css';
 
 const buildLinkClass = ({ isActive }) => {
@@ -12,10 +26,19 @@ const buildLinkClass = ({ isActive }) => {
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState([]);
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
+
   useEffect(() => {
     async function fetchMovie() {
-      const response = await requestMovieDetails(movieId);
-      setMovie(response);
+      try {
+        const response = await requestMovieDetails(movieId);
+        setMovie(response);
+      } catch (error) {
+        toast.error(
+          `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
+        );
+      }
     }
 
     fetchMovie();
@@ -23,54 +46,67 @@ const MovieDetailsPage = () => {
 
   return (
     <main className={css.main}>
+      <div className={css.backLinkWrapper}>
+        <BackLink to={backLinkHref} className={css.backLink}>
+          Back to movies
+        </BackLink>
+      </div>
       {!!movie && (
-        <div className={css.movieWrapper}>
-          <img
-            src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-            alt=""
-          />
-          <div className={css.descriptionWrapper}>
-            <h2 className={css.title}>{movie.title}</h2>
-            <p>
-              <b>Overview:</b>
-            </p>
-            <p className={css.overview}>{movie.overview}</p>
-            <p>
-              <b>Rating:</b> {movie.vote_average}
-            </p>
-            <p>
-              <b>Popularity:</b> {movie.popularity}
-            </p>
-            <p>
-              <b>Release date:</b> {movie.release_date}
-            </p>
-            <div>
-              <b>Genre:</b>
-              {movie.genres?.map(el => (
-                <div key={el.id} className={css.genreItem}>
-                  {el.name}
-                </div>
-              ))}
+        <>
+          <div className={css.movieWrapper}>
+            <img
+              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+              alt=""
+            />
+            <div className={css.descriptionWrapper}>
+              <h2 className={css.title}>{movie.title}</h2>
+              <p>
+                <b>Overview:</b>
+              </p>
+              <p className={css.overview}>{movie.overview}</p>
+              <p>
+                <b>Rating:</b> {movie.vote_average}
+              </p>
+              <p>
+                <b>Popularity:</b> {movie.popularity}
+              </p>
+              <p>
+                <b>Release date:</b> {movie.release_date}
+              </p>
+              <div>
+                <b>Genre:</b>
+                {movie.genres?.map(el => (
+                  <div key={el.id} className={css.genreItem}>
+                    {el.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+          <div className={css.wrapper}>
+            <p className={css.informText}>
+              <b>Additional information</b>
+            </p>
+            <div className={css.linksWrapper}>
+              <NavLink to="cast" className={buildLinkClass}>
+                Cast
+              </NavLink>
+              <NavLink to="reviews" className={buildLinkClass}>
+                Reviews
+              </NavLink>
+            </div>
+            <Suspense fallback={<Loader />}>
+              <Routes>
+                <Route path="cast" element={<MovieCast movieId={movieId} />} />
+                <Route
+                  path="reviews"
+                  element={<MovieReviews movieId={movieId} />}
+                />
+              </Routes>
+            </Suspense>
+          </div>
+        </>
       )}
-      <div className={css.wrapper}>
-        <p className={css.informText}>
-          <b>Additional information</b>
-        </p>
-        <div className={css.linksWrapper}>
-          <NavLink to="cast" className={buildLinkClass}>
-            Cast
-          </NavLink>
-          <NavLink to="reviews" className={buildLinkClass}>
-            Reviews
-          </NavLink>
-        </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Outlet />
-        </Suspense>
-      </div>
     </main>
   );
 };

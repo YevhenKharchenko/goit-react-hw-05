@@ -1,21 +1,25 @@
-import { requestMovieCredits } from '../../services/tmdb-api';
+import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { requestMovieCredits } from '../../services/tmdb-api';
 import css from './MovieCast.module.css';
 
-const MovieCast = () => {
-  const { movieId: idMovie } = useParams();
-
+const MovieCast = ({ movieId }) => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
     async function fetchCast() {
-      const response = await requestMovieCredits(idMovie);
-      setCast(response);
+      try {
+        const response = await requestMovieCredits(movieId);
+        setCast(response);
+      } catch (error) {
+        toast.error(
+          `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
+        );
+      }
     }
 
     fetchCast();
-  }, [idMovie]);
+  }, [movieId]);
 
   return (
     <ul className={css.list}>

@@ -1,5 +1,32 @@
 .list {
   display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.listItem {
+  border: 1px solid black;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+  justify-content: center;
+  display: flex;
   flex-direction: column;
-  gap: 10px;
+}
+
+.itemTextWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  font-size: 14px;
+  height: 100px;
+  background-color: #1a1a1a;
+}
+
+.title {
+}
+
+.rating {
+  font-size: 14px;
 }

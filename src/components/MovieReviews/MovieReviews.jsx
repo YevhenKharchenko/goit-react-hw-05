@@ -1,20 +1,25 @@
-import { requestMovieReviews } from '../../services/tmdb-api';
+import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { requestMovieReviews } from '../../services/tmdb-api';
 import css from './MovieReviews.module.css';
 
-const MovieReviews = () => {
-  const { movieId: idMovies } = useParams();
-
+const MovieReviews = ({ movieId }) => {
   const [reviews, setReviews] = useState([]);
+
   useEffect(() => {
     async function fetchCast() {
-      const response = await requestMovieReviews(idMovies);
-      setReviews(response);
+      try {
+        const response = await requestMovieReviews(movieId);
+        setReviews(response);
+      } catch (error) {
+        toast.error(
+          `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
+        );
+      }
     }
 
     fetchCast();
-  }, [idMovies]);
+  }, [movieId]);
 
   return reviews.length ? (
     <ul className={css.list}>
@@ -28,7 +33,7 @@ const MovieReviews = () => {
       })}
     </ul>
   ) : (
-    'No reviews'
+    <p className={css.noReviews}>There are no reviews for this movie yet!</p>
   );
 };
 
