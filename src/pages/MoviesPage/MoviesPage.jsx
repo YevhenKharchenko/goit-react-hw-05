@@ -15,8 +15,16 @@ const MoviesPage = () => {
 
     async function fetchMovie() {
       try {
-        const response = await requestMovie(query);
-        setMovies(response);
+        const fetchedMovies = await requestMovie(query);
+
+        if (!fetchedMovies.length) {
+          toast.error(
+            `Sorry, there are no movies matching your search query. Please, try again!`
+          );
+          return;
+        }
+
+        setMovies(fetchedMovies);
       } catch (error) {
         toast.error(
           `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`

@@ -1,22 +1,10 @@
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
-import { useState, useEffect, lazy, Suspense } from 'react';
-import {
-  Route,
-  Routes,
-  NavLink,
-  useParams,
-  useLocation,
-} from 'react-router-dom';
+import { useState, useEffect, Suspense, useRef } from 'react';
+import { NavLink, useParams, useLocation, Outlet } from 'react-router-dom';
 import { requestMovieDetails } from '../../services/tmdb-api';
 import Loader from '../../components/Loader/Loader.jsx';
 import BackLink from '../../components/BackLink/BackLink.jsx';
-const MovieCast = lazy(() =>
-  import('../../components/MovieCast/MovieCast.jsx')
-);
-const MovieReviews = lazy(() =>
-  import('../../components/MovieReviews/MovieReviews.jsx')
-);
 import css from './MovieDetailsPage.module.css';
 
 const buildLinkClass = ({ isActive }) => {
@@ -27,11 +15,12 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState([]);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/movies';
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     async function fetchMovie() {
       try {
+        setMovie([]);
         const response = await requestMovieDetails(movieId);
         setMovie(response);
       } catch (error) {
@@ -47,7 +36,7 @@ const MovieDetailsPage = () => {
   return (
     <main className={css.main}>
       <div className={css.backLinkWrapper}>
-        <BackLink to={backLinkHref} className={css.backLink}>
+        <BackLink to={backLinkHref.current} className={css.backLink}>
           Back to movies
         </BackLink>
       </div>
@@ -96,13 +85,7 @@ const MovieDetailsPage = () => {
               </NavLink>
             </div>
             <Suspense fallback={<Loader />}>
-              <Routes>
-                <Route path="cast" element={<MovieCast movieId={movieId} />} />
-                <Route
-                  path="reviews"
-                  element={<MovieReviews movieId={movieId} />}
-                />
-              </Routes>
+              <Outlet />
             </Suspense>
           </div>
         </>

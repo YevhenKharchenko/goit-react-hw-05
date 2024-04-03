@@ -1,16 +1,19 @@
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { requestMovieCredits } from '../../services/tmdb-api';
 import css from './MovieCast.module.css';
 
-const MovieCast = ({ movieId }) => {
+const MovieCast = () => {
   const [cast, setCast] = useState([]);
+  const { movieId: movieIdCast } = useParams();
 
   useEffect(() => {
     async function fetchCast() {
       try {
-        const response = await requestMovieCredits(movieId);
-        setCast(response);
+        setCast([]);
+        const fetchedCredits = await requestMovieCredits(movieIdCast);
+        setCast(fetchedCredits);
       } catch (error) {
         toast.error(
           `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
@@ -19,9 +22,9 @@ const MovieCast = ({ movieId }) => {
     }
 
     fetchCast();
-  }, [movieId]);
+  }, [movieIdCast]);
 
-  return (
+  return cast.length ? (
     <ul className={css.list}>
       {cast.map(el => {
         return (
@@ -44,6 +47,8 @@ const MovieCast = ({ movieId }) => {
         );
       })}
     </ul>
+  ) : (
+    <p className={css.noCast}>There is no information about cast yet!</p>
   );
 };
 

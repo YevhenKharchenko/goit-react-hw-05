@@ -26,3 +26,9 @@
   height: 80px;
   background-color: #1a1a1a;
 }
+
+.noCast {
+  margin-top: 100px;
+  font-size: 20px;
+  text-align: center;
+}

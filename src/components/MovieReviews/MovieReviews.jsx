@@ -2,15 +2,18 @@ import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import { requestMovieReviews } from '../../services/tmdb-api';
 import css from './MovieReviews.module.css';
+import { useParams } from 'react-router-dom';
 
-const MovieReviews = ({ movieId }) => {
+const MovieReviews = () => {
   const [reviews, setReviews] = useState([]);
+  const { movieId: movieIdReviews } = useParams();
 
   useEffect(() => {
-    async function fetchCast() {
+    async function fetchReviews() {
       try {
-        const response = await requestMovieReviews(movieId);
-        setReviews(response);
+        setReviews([]);
+        const fetchedReviews = await requestMovieReviews(movieIdReviews);
+        setReviews(fetchedReviews);
       } catch (error) {
         toast.error(
           `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
@@ -18,8 +21,8 @@ const MovieReviews = ({ movieId }) => {
       }
     }
 
-    fetchCast();
-  }, [movieId]);
+    fetchReviews();
+  }, [movieIdReviews]);
 
   return reviews.length ? (
     <ul className={css.list}>
