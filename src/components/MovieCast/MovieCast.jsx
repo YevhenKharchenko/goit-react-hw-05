@@ -5,13 +5,12 @@ import { requestMovieCredits } from '../../services/tmdb-api';
 import css from './MovieCast.module.css';
 
 const MovieCast = () => {
-  const [cast, setCast] = useState([]);
+  const [cast, setCast] = useState(null);
   const { movieId: movieIdCast } = useParams();
 
   useEffect(() => {
     async function fetchCast() {
       try {
-        setCast([]);
         const fetchedCredits = await requestMovieCredits(movieIdCast);
         setCast(fetchedCredits);
       } catch (error) {
@@ -24,7 +23,7 @@ const MovieCast = () => {
     fetchCast();
   }, [movieIdCast]);
 
-  return cast.length ? (
+  return Array.isArray(cast) && cast.length > 0 ? (
     <ul className={css.list}>
       {cast.map(el => {
         return (
@@ -47,9 +46,9 @@ const MovieCast = () => {
         );
       })}
     </ul>
-  ) : (
+  ) : Array.isArray(cast) ? (
     <p className={css.noCast}>There is no information about cast yet!</p>
-  );
+  ) : null;
 };
 
 export default MovieCast;

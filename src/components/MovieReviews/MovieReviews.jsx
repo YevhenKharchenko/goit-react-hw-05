@@ -1,17 +1,16 @@
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { requestMovieReviews } from '../../services/tmdb-api';
 import css from './MovieReviews.module.css';
-import { useParams } from 'react-router-dom';
 
 const MovieReviews = () => {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
   const { movieId: movieIdReviews } = useParams();
 
   useEffect(() => {
     async function fetchReviews() {
       try {
-        setReviews([]);
         const fetchedReviews = await requestMovieReviews(movieIdReviews);
         setReviews(fetchedReviews);
       } catch (error) {
@@ -24,7 +23,7 @@ const MovieReviews = () => {
     fetchReviews();
   }, [movieIdReviews]);
 
-  return reviews.length ? (
+  return Array.isArray(reviews) && reviews.length > 0 ? (
     <ul className={css.list}>
       {reviews.map(el => {
         return (
@@ -35,9 +34,9 @@ const MovieReviews = () => {
         );
       })}
     </ul>
-  ) : (
+  ) : Array.isArray(reviews) ? (
     <p className={css.noReviews}>There are no reviews for this movie yet!</p>
-  );
+  ) : null;
 };
 
 export default MovieReviews;
