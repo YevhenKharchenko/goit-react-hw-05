@@ -13,16 +13,18 @@ const buildLinkClass = ({ isActive }) => {
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState([]);
+  const [movieDetails, setMovieDetails] = useState([]);
   const location = useLocation();
   const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
+    if (!movieId) return;
+
     async function fetchMovie() {
       try {
-        setMovie([]);
+        setMovieDetails([]);
         const response = await requestMovieDetails(movieId);
-        setMovie(response);
+        setMovieDetails(response);
       } catch (error) {
         toast.error(
           `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
@@ -40,31 +42,35 @@ const MovieDetailsPage = () => {
           Back to movies
         </BackLink>
       </div>
-      {!!movie && (
+      {!!movieDetails && (
         <>
           <div className={css.movieWrapper}>
             <img
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-              alt=""
+              src={
+                movieDetails.poster_path
+                  ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}`
+                  : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+              }
+              alt="Movie poster"
             />
             <div className={css.descriptionWrapper}>
-              <h2 className={css.title}>{movie.title}</h2>
+              <h2 className={css.title}>{movieDetails.title}</h2>
               <p>
                 <b>Overview:</b>
               </p>
-              <p className={css.overview}>{movie.overview}</p>
+              <p className={css.overview}>{movieDetails.overview}</p>
               <p>
-                <b>Rating:</b> {movie.vote_average}
+                <b>Rating:</b> {movieDetails.vote_average}
               </p>
               <p>
-                <b>Popularity:</b> {movie.popularity}
+                <b>Popularity:</b> {movieDetails.popularity}
               </p>
               <p>
-                <b>Release date:</b> {movie.release_date}
+                <b>Release date:</b> {movieDetails.release_date}
               </p>
               <div>
                 <b>Genre:</b>
-                {movie.genres?.map(el => (
+                {movieDetails.genres?.map(el => (
                   <div key={el.id} className={css.genreItem}>
                     {el.name}
                   </div>

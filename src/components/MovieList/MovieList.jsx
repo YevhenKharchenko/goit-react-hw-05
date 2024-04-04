@@ -12,11 +12,14 @@ const MovieList = ({ movies }) => {
             <li key={el.id} className={css.listItem}>
               <Link to={`/movies/${el.id}`} state={{ from: location }}>
                 <div>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w300${el.backdrop_path}`}
-                    alt={el.title}
-                    width={200}
-                  />
+                  <div className={css.itemImgWrapper}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w300${el.backdrop_path}`}
+                      alt={el.title}
+                      width={200}
+                      height={120}
+                    />
+                  </div>
                   <div className={css.itemTextWrapper}>
                     <p className={css.title}>
                       {el.title} ({el.release_date.slice(0, 4)})

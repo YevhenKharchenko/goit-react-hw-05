@@ -9,9 +9,12 @@
   border-radius: 8px;
   overflow: hidden;
   width: 200px;
-  justify-content: center;
   display: flex;
+  justify-content: center;
   flex-direction: column;
+}
+
+.itemImgWrapper {
 }
 
 .itemTextWrapper {

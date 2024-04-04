@@ -5,13 +5,13 @@ import MovieList from '../../components/MovieList/MovieList';
 import css from './HomePage.module.css';
 
 const HomePage = () => {
-  const [movies, setMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
   useEffect(() => {
     async function fetchMovies() {
       try {
         const fetchedMovies = await requestTrendingMovies();
-        setMovies(fetchedMovies);
+        setTrendingMovies(fetchedMovies);
       } catch (error) {
         toast.error(
           `Oops! Something went wrong. Please try again later or contact support if the issue persists. Error details: ${error.message}`
@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <main className={css.main}>
       <h1 className={css.mainTitle}>Trending today</h1>
-      <MovieList movies={movies} />
+      <MovieList movies={trendingMovies} />
     </main>
   );
 };

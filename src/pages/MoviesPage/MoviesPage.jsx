@@ -21,6 +21,7 @@ const MoviesPage = () => {
           toast.error(
             `Sorry, there are no movies matching your search query. Please, try again!`
           );
+
           return;
         }
 
@@ -35,7 +36,7 @@ const MoviesPage = () => {
     fetchMovie();
   }, [query]);
 
-  function onSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const value = e.currentTarget.elements.name.value;
@@ -48,7 +49,7 @@ const MoviesPage = () => {
 
   return (
     <main className={css.main}>
-      <form onSubmit={onSubmit} className={css.form}>
+      <form onSubmit={handleSubmit} className={css.form}>
         <input
           name="name"
           type="text"
